@@ -1,0 +1,81 @@
+import math, time, os
+import pygame 
+pygame.init()
+
+w=1600
+h= w*(9/16)
+
+screen = pygame.display.set_mode((w,h))
+
+clock = pygame.time.Clock
+main = True
+ingame = True
+
+keys = [0,0,0,0]
+keyset = [0,0,0,0]
+
+maxframe = 60
+gst = time.time()
+Time = time.time()-gst
+
+ty = 0
+tst = Time
+
+t1=[]
+t2 =[]
+t3=[]
+t4=[]
+
+def summon_note(n):
+    ty =0
+    tst=Time
+    if n == 1:
+        t1.append([ty,tst])
+    if n == 2:
+        t2.append([ty,tst])
+    if n == 3:
+        t3.append([ty,tst])
+    if n == 4:
+        t4.append([ty,tst])
+
+while main:
+    while ingame:
+
+        fps = 60
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+            if event.type == pygame.KEYDOWN:
+                 if event.key == pygame.K_d:
+                     keyset[0]=1
+                 if event.key == pygame.K_f:
+                     keyset[1]=1
+                 if event.key == pygame.K_j:
+                     keyset[2]=1
+                 if event.key == pygame.K_k:
+                     keyset[3]=1
+            if event.type == pygame.KEYUP:
+                 if event.key == pygame.K_d:
+                     keyset[0]=0
+                 if event.key == pygame.K_f:
+                     keyset[1]=0
+                 if event.key == pygame.K_j:
+                     keyset[2]=0
+                 if event.key == pygame.K_k:
+                     keyset[3]=0
+        screen.fill((0,0,0))
+
+        keys[0] += (keyset[0]-keys[0])/(2*(maxframe /fps))
+        keys[1] += (keyset[1]-keys[1])/(2*(maxframe /fps))
+        keys[2] += (keyset[2]-keys[2])/(2*(maxframe /fps))
+        keys[3] += (keyset[3]-keys[3])/(2*(maxframe /fps))
+
+        pygame.draw.rect(screen, (0,0,0),(w /2-w/8,-int(w/100),w/4,h+int(w/50))) #gear bgrnd
+        pygame.draw.rect(screen, (255,255,255),(w /2-w / 8,-int(w/100),w/4,h+int(w/50)), int(w/100)) #gear line
+        pygame.draw.rect(screen, (255,255,255),(w/2-w/8,(h/12)*9,w/4,h/2), int(h/100))
+        
+        pygame.display.flip()
+##############note############
+for tile_data in t1:
+    pygame.draw.rect(screen, (255,255,255),(w/2-w/8,(h/12)*9,w/4,h/2),int(h/100))
+
